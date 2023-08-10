@@ -1,0 +1,58 @@
+<div
+  class="fixed top-0 right-0 w-[330px] h-full transition-transform bg-white shadow-2xl overflow-y-auto"
+  [ngClass]="showSideBar ? 'translate-x-0' : 'translate-x-full'"
+>
+  <div class="text-end">
+    <button class="px-3 py-2" (click)="toggleSideBar()">
+      <i class="bx bx-x text-2xl"></i>
+    </button>
+  </div>
+
+  <div
+    class="flex flex-col px-5 py-3 gap-3"
+    *ngIf="totalPrice$ | async; else emptyCart"
+  >
+    <div *ngFor="let cartItem of cartItems$ | async">
+      <div class="flex items-center gap-3">
+        <img
+          [src]="cartItem.image"
+          [alt]="cartItem.title"
+          class="w-32 object-cover"
+        />
+        <div class="flex-1 overflow-x-hidden p-2">
+          <h3 class="text-lg font-semibold">
+            {{ cartItem.title | titlecase }}
+          </h3>
+          <span>Quantity: {{ cartItem.quantity }}</span>
+          <p>Price: {{ cartItem.price | currency }}</p>
+
+          <div class="flex gap-3">
+            <button
+              class="text-white bg-red-600 hover:bg-red-500 focus:ring-4 focus:ring-red-300 font-medium rounded-lg px-4 py-2.5 mt-2"
+              (click)="subtractQuantity(cartItem)"
+            >
+              <i class="bx bx-minus"></i>
+            </button>
+            <button
+              class="text-sm text-white bg-gray-800 hover:bg-gray-700 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg px-4 py-2.5 mt-2"
+              (click)="addQuantity(cartItem)"
+            >
+              <i class="bx bx-plus"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h5 class="text-lg font-semibold">
+      Total: {{ totalPrice$ | async | currency }}
+    </h5>
+  </div>
+</div>
+
+<ng-template #emptyCart>
+  <h3
+    class="text-xl font-semibold text-center flex items-center justify-center gap-1"
+  >
+    Empty cart <i class="bx bx-cart"></i>
+  </h3>
+</ng-template>

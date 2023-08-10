@@ -1,0 +1,28 @@
+<header
+  class="max-w-screen-2xl mx-auto sticky top-0 bg-white flex items-center justify-between p-3"
+>
+  <h1 class="text-xl font-bold inline-flex items-center">
+    Shopping <i class="bx bxs-store ml-1"></i>
+  </h1>
+
+  <button
+    type="button"
+    class="relative inline-flex items-center px-3.5 py-3 text-lg font-medium text-center rounded-lg"
+    (click)="toggleSideBar()"
+  >
+    <i
+      class="bx bxs-shopping-bag"
+      *ngIf="cartItemCount !== 0; else emptyShoppingIcon"
+    ></i>
+    <div
+      class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-600 border-2 border-white rounded-full -top-2 -right-2"
+      *ngIf="cartItemCount > 0"
+    >
+      {{ cartItemCount }}
+    </div>
+  </button>
+</header>
+
+<ng-template #emptyShoppingIcon>
+  <i class="bx bx-shopping-bag"></i>
+</ng-template>
